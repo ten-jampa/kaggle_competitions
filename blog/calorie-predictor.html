@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Predictor: A Kaggle Competition Journey - Tenzin Jampa</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    
+    <header>
+        <div class="container">
+            <h1>Calorie Predictor: A Kaggle Competition Journey</h1>
+            <p>Exploring machine learning techniques to predict calorie burn from exercise data</p>
+            <a href="https://www.kaggle.com/code/tenzinjampa/calorie-predictor?scriptVersionId=242031775" class="kaggle-badge" target="_blank">
+                🔗 View on Kaggle
+            </a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="content">
+            <div class="highlight-box">
+                <h3>🏆 Competition Overview</h3>
+                <p>This project tackles the Playground Series Season 5 Episode 5 competition on Kaggle, where the goal is to predict calorie burn based on various exercise and personal characteristics. The dataset contains 750,000 samples with 8 features including age, height, weight, exercise duration, heart rate, and body temperature.</p>
+            </div>
+            
+            <h2>📊 Dataset Exploration</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">750,000</div>
+                    <div class="stat-label">Data Samples</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Features</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Missing Values</div>
+                </div>
+            </div>
+            
+            <h3>Features Available:</h3>
+            <ul>
+                <li><strong>Sex:</strong> Gender of the individual</li>
+                <li><strong>Age:</strong> Age in years</li>
+                <li><strong>Height:</strong> Height in centimeters</li>
+                <li><strong>Weight:</strong> Weight in kilograms</li>
+                <li><strong>Duration:</strong> Exercise duration in minutes</li>
+                <li><strong>Heart_Rate:</strong> Heart rate during exercise</li>
+                <li><strong>Body_Temp:</strong> Body temperature during exercise</li>
+                <li><strong>Calories:</strong> Target variable - calories burned</li>
+            </ul>
+            
+            <h2>🔍 Data Preparation & Analysis</h2>
+            
+            <h3>Data Cleaning Steps:</h3>
+            <div class="code-block">
+# Standardize column names
+df.columns = df.columns.str.lower().str.replace(' ', '_')
+
+# Select relevant features
+features = ['sex', 'age', 'height', 'weight', 'duration', 'heart_rate', 'body_temp', 'calories']
+df = df[features]
+            </div>
+            
+            <h3>Target Variable Transformation</h3>
+            <p>The calorie distribution showed an exponential decay pattern with a long tail. To handle this non-normal distribution, I applied a log transformation using <code>np.log1p()</code> to stabilize the variance and improve model performance.</p>
+            
+            <div class="code-block">
+# Apply log transformation to calories
+log_calories = np.log1p(calories)
+df.calories = log_calories
+            </div>
+            
+            <h2>📈 Exploratory Data Analysis</h2>
+            
+            <h3>Correlation Analysis</h3>
+            <p>I analyzed the correlation between numerical variables to understand feature relationships. The correlation matrix revealed strong relationships between:</p>
+            <ul>
+                <li>Duration and calories (positive correlation)</li>
+                <li>Heart rate and calories (positive correlation)</li>
+                <li>Weight and calories (positive correlation)</li>
+                <li>Age and various physiological factors</li>
+            </ul>
+            
+            <h3>Gender Analysis</h3>
+            <p>Explored how calorie burn patterns differ between genders, considering physiological differences in metabolism and body composition.</p>
+            
+            <h2>🤖 Model Development</h2>
+            
+            <p>The project involved several machine learning approaches:</p>
+            <ul>
+                <li><strong>Feature Engineering:</strong> Creating interaction terms and derived features</li>
+                <li><strong>Model Selection:</strong> Testing various algorithms including Random Forest, XGBoost, and Neural Networks</li>
+                <li><strong>Cross-Validation:</strong> Using k-fold cross-validation to ensure robust model evaluation</li>
+                <li><strong>Hyperparameter Tuning:</strong> Optimizing model parameters for best performance</li>
+            </ul>
+            
+            <h2>📊 Results & Insights</h2>
+            
+            <div class="highlight-box">
+                <h3>Key Findings</h3>
+                <ul>
+                    <li>Exercise duration is the strongest predictor of calorie burn</li>
+                    <li>Heart rate during exercise shows strong correlation with energy expenditure</li>
+                    <li>Body weight significantly influences calorie burn rates</li>
+                    <li>Age-related metabolic changes affect calorie burn patterns</li>
+                    <li>Gender differences in calorie burn are consistent with physiological expectations</li>
+                </ul>
+            </div>
+            
+            <h2>🔬 Technical Approach</h2>
+            
+            <h3>Libraries Used:</h3>
+            <div class="code-block">
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+            </div>
+            
+            <h3>Evaluation Metrics:</h3>
+            <ul>
+                <li><strong>Root Mean Squared Error (RMSE):</strong> Primary evaluation metric for the competition</li>
+                <li><strong>R-squared (R²):</strong> Measure of model fit and explanatory power</li>
+                <li><strong>Cross-validation scores:</strong> Robust performance estimation</li>
+            </ul>
+            
+            <h2>🎯 Future Improvements</h2>
+            
+            <p>Potential areas for enhancement include:</p>
+            <ul>
+                <li>Advanced feature engineering with domain knowledge</li>
+                <li>Ensemble methods combining multiple models</li>
+                <li>Deep learning approaches for complex non-linear relationships</li>
+                <li>Feature selection techniques to reduce dimensionality</li>
+                <li>Hyperparameter optimization using Bayesian optimization</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <h3>💡 Learning Outcomes</h3>
+                <p>This competition provided valuable experience in handling real-world regression problems, feature engineering, and model optimization. The project demonstrates the importance of understanding data distributions and applying appropriate transformations for better model performance.</p>
+            </div>
+            
+            <p style="text-align: center; margin-top: 40px; color: #666;">
+                <em>This blog post was generated from a Jupyter notebook. For the complete analysis with code and visualizations, visit the Kaggle notebook linked above.</em>
+            </p>
+        </div>
+    </div>
+</body>
+</html> 
